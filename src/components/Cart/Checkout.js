@@ -1,3 +1,4 @@
+// checkout component containing personal data input forms
 import {useRef, useState} from "react";
 import classes from './Checkout.module.css';
 

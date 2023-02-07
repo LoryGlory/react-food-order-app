@@ -1,3 +1,4 @@
+// component for individual meal items
 import {useContext} from 'react';
 import classes from './MealItem.module.css';
 import MealItemForm from "./MealItemForm";

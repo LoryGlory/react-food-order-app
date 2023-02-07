@@ -1,3 +1,4 @@
+// creation of context to support autocompletion
 import React from "react";
 
 const CartContext = React.createContext({

@@ -1,14 +1,18 @@
+// manage cart context data and provide context to all necessary components
 import {useReducer} from "react";
 
 import CartContext from './cart-context';
-import cart from "../components/Cart/Cart";
 
+// object holding cart default state
 const defaultCartState = {
   items: [],
   totalAmount: 0
 }
 
+// reducer function for state management
 const cartReducer = (state, action) => {
+
+  // function to add items to cart
   if (action.type === 'ADD_ITEM') {
     const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount
 
@@ -17,6 +21,7 @@ const cartReducer = (state, action) => {
     const existingCartItem = state.items[existingCartItemsIndex];
     let updatedItems;
 
+    // update cart items by addition to existing item oder concatenating to existing cart array
     if (existingCartItem) {
       const updatedItem = {
         ...existingCartItem,
@@ -34,7 +39,9 @@ const cartReducer = (state, action) => {
     };
   }
 
+  // function to remove items from cart
   if (action.type === 'REMOVE_ITEM') {
+    // check if to added item id exists in cart items id
     const existingCartItemIndex = state.items.findIndex(
         (item) => item.id === action.id
     );
@@ -49,6 +56,7 @@ const cartReducer = (state, action) => {
       updatedItems[existingCartItemIndex] = updatedItem;
     }
 
+    // return updated items + amount
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount
@@ -62,8 +70,10 @@ const cartReducer = (state, action) => {
   return defaultCartState;
 }
 
+// provider containing add/remove and clear items from cart handlers
 const CartProvider = (props) => {
   const [cartState, dispatchCartAction] = useReducer(cartReducer, defaultCartState);
+
 
   const addItemToCartHandler = (item) => {
     dispatchCartAction({
@@ -71,6 +81,7 @@ const CartProvider = (props) => {
       item: item
     });
   };
+
 
   const removeItemFromCartHandler = (id) => {
     dispatchCartAction({
@@ -85,6 +96,7 @@ const CartProvider = (props) => {
     })
   };
 
+  // cart value holding pointers to functions; value for cartContext provider below
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,

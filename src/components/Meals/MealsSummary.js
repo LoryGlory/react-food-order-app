@@ -1,3 +1,4 @@
+// component containing text above item list
 import classes from './MealsSummary.module.css';
 
 const MealsSummary = () => {
